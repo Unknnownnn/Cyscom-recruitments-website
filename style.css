@@ -1,0 +1,1226 @@
+@font-face {
+    font-family: futura;
+    src: url(./Futura-Bold.ttf);
+}
+
+@font-face {
+    font-family: Helvetica;
+    src: url(./HelveticaNowText-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica';
+}
+
+*::selection {
+    color: #00BFFF;
+    background-color: #0D1117;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #0D1117 0%, #1B2951 100%);
+    color: #FFFFFF;
+}
+
+#nav {
+    width: 100%;
+    /* background-color: burlywood; */
+    position: fixed;
+    z-index: 99;
+    padding: 25px;
+    display: flex;  
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+#nav-part1 {
+    /* background: red; */
+    height: 82px;
+    overflow: hidden;
+}
+
+#nav-part1 svg {
+    display: block;
+}
+
+#nav #nav-part2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    
+}
+
+#links {
+    padding: 10px;
+    color: white;
+}
+
+#nav-part2 #links a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 14px;
+    margin: 0px 20px;
+    transition: color 0.3s ease;
+}
+
+#nav-part2 #links a:hover {
+    color: #00BFFF;
+}
+
+#icons {
+    padding: 10px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+}
+
+#nav-part2 #icons i {
+    font-size: 18px;
+    margin: 0px 20px;
+    font-weight: 100;
+    color: #00BFFF;
+    transition: color 0.3s ease;
+}
+
+#nav-part2 #icons i:hover {
+    color: #FFFFFF;
+}
+
+#cursor {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background-color: transparent;
+    position: fixed;
+    transform: translate(-50%, -50%) scale(0);
+    transition: background-color 0.3s ease;
+}
+
+#page1 {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    padding: 0 1vw;
+    padding-top: 28vh;
+}
+
+#page1 h1 {
+    font-size: 15.8vw;
+    font-family: futura;
+    text-transform: uppercase;
+    line-height: 9vw;
+    letter-spacing: -8px;
+
+}
+
+#video-container {
+    height: 100vh;
+    width: 100%;
+    /* background-color: gray; */
+    margin-top: 1vw;
+    position: relative;
+}
+
+#video-container video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+#video-container #play {
+    padding: 3vw 2.3vw;
+    background-color: black;
+    color: white;
+    font-size: 1.3vw;
+    text-transform: uppercase;
+    font-family: futura;
+    position: fixed;
+    border-radius: 50%;
+    opacity: 0;
+    scale: 0;
+}
+
+#page2 {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3vw 1vw;
+}
+
+/* Slider Container */
+#slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 1400px; /* Extended width for more elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Slider Wrapper */
+#slider-wrapper {
+    display: flex;
+    width: 100%;
+    overflow: visible; /* Back to hidden overflow */
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    margin: 0;
+}
+
+/* Navigation Buttons */
+.slider-nav {
+    position: absolute; /* Back to absolute positioning within container */
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 191, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(0, 191, 255, 0.5);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    color: #00BFFF;
+}
+
+.slider-nav:hover {
+    background: rgba(0, 191, 255, 0.4);
+    border-color: #00BFFF;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slider-nav:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.slider-nav i {
+    font-size: 24px;
+    color: #FFFFFF;
+}
+
+#prev-btn {
+    left: -30px; /* Back to original positioning */
+}
+
+#next-btn {
+    right: -30px; /* Back to original positioning */
+}
+
+#page2 .elem {
+    height: 70vh;
+    width: 400px;
+    min-width: 400px;
+    margin: 0 20px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+#page2 .elem img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    scale: 1.1;
+}
+
+#page2 .elem .dets{
+    position: absolute;
+    /* transform: translate(-50%, -50%) ; */
+    will-change: transform;
+    opacity: 1;
+}
+
+#page2 .elem .dets .dets-info{
+    background-color: #f5dfcf;
+    padding: 0 32px;
+    width: 303px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.dets .container{
+    background-color: #f5dfcf;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 303px;
+    height: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+    padding-top: 50px;
+    z-index: -1;
+    transition: height 0.25s cubic-bezier(0.22, 0.57, 0.12, .96);
+    will-change: height;
+}
+
+#page2 .elem .dets .container .listing{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.container .listing .list-elem img{
+    height: 118px;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+#duobook{
+    transform: scale(1.4);
+    margin-bottom: 41px;
+}
+
+.container .listing .list-elem p{
+    font-size: 12px;
+    margin: 10px 10px;
+    text-align: center;
+}
+
+.elem .dets:hover .container{
+    height: auto ;
+}
+
+
+#moto {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 24px;
+    margin-bottom: 150px;
+}
+
+#moto h2 {
+    font-size: 56px;
+    font-family: futura;
+    width: 784px;
+}
+
+#moto .para {
+    width: 351px;
+    margin-right: 100px;
+    padding: 10px;
+    line-height: 23px;
+    letter-spacing: 0.8px;
+}
+
+#moto .para p {
+    font-size: 16px;
+    margin-bottom: 32px;
+}
+
+#moto .para a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 100;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+#page3 {
+    min-height: 120vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.child {
+    height: 54vh;
+    width: 38vw;
+    /* background-color: red; */
+    /* border: 2px solid black; */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.child img {
+    height: 100%;
+}
+
+.child .childInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.child .childInfo a {
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-size: 14px;
+}
+
+#page4 {
+    min-height: 100vh;
+    width: 100%;
+    padding: 2rem 1rem;
+}
+
+/* Recruitment Section Styles */
+#recruitment-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+#recruitment-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+#recruitment-header h2 {
+    font-size: 4rem;
+    font-family: 'futura';
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #00BFFF, #0484ac);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#recruitment-header h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #FFFFFF;
+}
+
+#recruitment-header p {
+    font-size: 1.1rem;
+    color: #B0B0B0;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Form Container */
+#recruitment-form-container {
+    background: rgba(255, 255, 255, 0.00);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.0);
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section h4 {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    color: #00BFFF;
+    font-family: 'futura';
+}
+
+/* Form Rows and Groups */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.required {
+    color: #ff4757;
+}
+
+/* Form Inputs */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.8rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #00BFFF;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.1);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #888;
+}
+
+/* Department Selection Grid */
+.department-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.department-option {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.department-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.department-option label {
+    display: block;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    height: 100%;
+}
+
+.department-option:hover label {
+    background: rgba(0, 191, 255, 0.1);
+    border-color: rgba(0, 191, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.department-option.selected label {
+    background: rgba(0, 191, 255, 0.2);
+    border-color: #00BFFF;
+}
+
+.dept-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.department-option h5 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #FFFFFF;
+    font-family: 'futura';
+}
+
+.department-option p {
+    font-size: 0.9rem;
+    color: #B0B0B0;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Checkbox Styling */
+.checkbox-group {
+    margin-bottom: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    position: relative;
+    padding-left: 2rem;
+    line-height: 1.5;
+    color: #FFFFFF;
+}
+
+.checkbox-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.checkbox-label:hover .checkmark {
+    background: rgba(0, 191, 255, 0.1);
+    border-color: rgba(0, 191, 255, 0.5);
+}
+
+.checkbox-label input:checked ~ .checkmark {
+    background: #00BFFF;
+    border-color: #00BFFF;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-label input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-label a {
+    color: #00BFFF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.checkbox-label a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+/* Form Actions */
+.form-actions {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.submit-button {
+    background: linear-gradient(135deg, #00BFFF, #0484ac);
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 191, 255, 0.4);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+}
+
+.submit-button:disabled {
+    cursor: not-allowed;
+}
+
+.loading-spinner i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Message Styles */
+#form-messages {
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.message {
+    padding: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.success-msg {
+    background: rgba(46, 213, 115, 0.1);
+    border: 2px solid rgba(46, 213, 115, 0.3);
+    color: #FFFFFF;
+}
+
+.error-msg {
+    background: rgba(255, 71, 87, 0.1);
+    border: 2px solid rgba(255, 71, 87, 0.3);
+    color: #FFFFFF;
+}
+
+.message-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.message h4 {
+    font-family: 'futura';
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.message p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #recruitment-header h2 {
+        font-size: 2.5rem;
+    }
+    
+    #recruitment-header h3 {
+        font-size: 1.4rem;
+    }
+    
+    #recruitment-form-container {
+        padding: 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .department-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .submit-button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #recruitment-section {
+        padding: 1rem 0;
+    }
+    
+    #recruitment-form-container {
+        padding: 1rem;
+    }
+    
+    #recruitment-header {
+        margin-bottom: 2rem;
+    }
+    
+    #recruitment-header h2 {
+        font-size: 2rem;
+    }
+}
+
+#page5 {
+    min-height: 100vh;
+}
+
+#page5 #footer{
+    margin-top: 150px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+#footer #connect{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 5px;
+}
+
+#footer #connect p, #nitty p{
+    margin-bottom: 18px;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+#footer #connect a, #nitty a{
+    font-size: 17px;
+    color: #000;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#footer #logo{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#footer #logo img {
+    height: 270px;
+    width: 270px;
+    object-fit: cover;
+}
+
+#footer #logo #copyright {
+    margin-top: 90px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#footer #logo #copyright a{
+    padding: 0 20px;
+    text-decoration: none;
+    color: #000;
+    opacity: 0.5;
+}
+
+#footer #nitty{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+#page5 #footer-info{
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 90px;
+    text-align: center;
+}
+
+#page5 #footer-info p{
+    font-size: 18px;
+    line-height: 25px;
+}
+
+@media (max-width: 600px) {
+    #nav {
+        width: 100%;
+        /* background-color: burlywood; */
+        position: fixed;
+        z-index: 99;
+        padding: 15px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    #nav-part1 {
+        /* background: red; */
+        height: 67px;
+        overflow: hidden;
+    }
+
+    #nav-part1 svg {
+        display: block;
+        height: 67px;
+        width: 80px;
+    }
+
+    #nav #svg2 {
+        height: 40px;
+        margin-left: -20px;
+    }
+
+    #nav #nav-part2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+    }
+
+    #links {
+        padding: 10px;
+        display: flex;
+        color: white;
+    }
+
+    #icons {
+        padding: 7px;
+        border-radius: 50px;
+        background-color: #F7F7F7;
+    }
+
+    #nav-part2 #icons i {
+        font-size: 15px;
+        margin: 0px 20px;
+        font-weight: 100;
+    }
+
+    #page1 {
+        min-height: 70vh;
+        width: 100%;
+        padding: 0 3vw;
+        padding-top: 25vh;
+    }
+
+    #page1 h1 {
+        font-size: 15.5vw;
+        letter-spacing: -3px;
+    }
+
+    #video-container {
+        height: 25vh;
+        margin-top: 3vw;
+    }
+
+    #video-container #play {
+        padding: 9.5vw 7.2vw;
+        font-size: 4.5vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        opacity: 1;
+        scale: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    #page2 {
+        min-height: 100vh;
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5vw 3vw;
+    }
+
+    #slider-container {
+        width: 100%;
+        max-width: 400px; /* Adjusted for mobile */
+    }
+
+    #slider-wrapper {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        margin: 0; /* No margin needed for mobile either */
+    }
+
+    #page2 .elem {
+        height: 60vh;
+        width: 300px;
+        min-width: 300px;
+        margin: 0 10px;
+        scroll-snap-align: center;
+    }
+
+    .slider-nav {
+        width: 50px;
+        height: 50px;
+    }
+
+    .slider-nav i {
+        font-size: 20px;
+    }
+
+    #prev-btn {
+        left: -25px; /* Back to original mobile positioning */
+    }
+
+    #next-btn {
+        right: -25px; /* Back to original mobile positioning */
+    }
+
+    #moto {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 65px;
+        justify-content: center;
+        gap: 15px;
+        text-align: center;
+    }
+
+    #moto h2 {
+        font-size: 32px;
+        font-family: futura;
+        width: 100%;
+    }
+
+    #moto .para p {
+        font-size: 16px;
+        margin-bottom: 32px;
+    }
+
+    #moto .para a {
+        font-size: 12px;
+    }
+
+    #page3 {
+        min-height: 66vh;
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    .child {
+        height: 20vh;
+        width: 38vw;
+        /* background-color: red; */
+        /* border: 2px solid black; */
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .child img {
+        height: 100%;
+    }
+
+    .child .childInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .child .childInfo a {
+        text-decoration: none;
+        color: black;
+        text-transform: uppercase;
+        font-weight: 100;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    #page4 #recruitment-section {
+        padding: 1rem 0;
+    }
+    
+    #page4 #recruitment-form-container {
+        padding: 1rem;
+        margin: 0 10px;
+    }
+    
+    #page4 #recruitment-header {
+        margin-bottom: 2rem;
+    }
+    
+    #page4 #recruitment-header h2 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    #page4 #recruitment-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    #page4 .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    #page4 .department-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    #page4 .submit-button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    #page5 #footer{
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #footer #connect{
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+        gap: 5px;
+        align-items: center;
+    }
+    
+    #footer #connect p, #nitty p{
+        margin-bottom: 15px;
+        font-size: 14px;
+        opacity: 0.5;
+    }
+    
+    #footer #connect a, #nitty a{
+        font-size: 17px;
+        color: #000;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    #footer #logo{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #footer #logo img {
+        height: auto;
+        width: 40%;
+        object-fit: cover;
+    }
+    
+    #footer #logo #copyright {
+        margin-top: 15px;
+        display: flex;
+    }
+    
+    #footer #logo #copyright a{
+        padding: 0 15px;
+        text-decoration: none;
+        color: #000;
+        opacity: 0.5;
+        text-align: center;
+    }
+    
+    #footer #nitty{
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    #page5 #footer-info{
+        width: 100%;
+        margin: 0;
+        padding: 15px;
+        text-align: center;
+    }
+    
+    #page5 #footer-info p{
+        font-size: 18px;
+        line-height: 25px;
+    }
+}
+
+/* ========================
+   Animated Department Selector Styles
+   ======================== */
+
+#animated-department-selector {
+    position: relative;
+    margin: 30px 0;
+}
+
+/* Custom scrollbar for department selector */
+#animated-department-selector div::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+#animated-department-selector div::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+#animated-department-selector div::-webkit-scrollbar-thumb:hover {
+    background: #5a6fd8;
+}
+
+#animated-department-selector div::-webkit-scrollbar-corner {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Firefox scrollbar */
+#animated-department-selector div {
+    scrollbar-width: thin;
+    scrollbar-color: #667eea rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile responsiveness for department selector */
+@media (max-width: 768px) {
+    #animated-department-selector {
+        padding: 0 10px;
+    }
+    
+    #animated-department-selector svg {
+        width: 60px !important;
+        height: 60px !important;
+        top: -45px !important;
+    }
+    
+    /* Make department cards smaller on mobile */
+    #animated-department-selector .department-card {
+        min-width: 200px !important;
+        height: 160px !important;
+    }
+}

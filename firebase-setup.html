@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Setup Helper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .setup-step {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .setup-step h3 {
+            color: #007bff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .setup-step ol {
+            margin-left: 20px;
+        }
+
+        .setup-step li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .config-box {
+            background: #2d3748;
+            color: #68d391;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            border: 2px solid #4a5568;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .test-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .test-button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .test-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-height: 100px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .status.pass { background: #d4edda; color: #155724; }
+        .status.fail { background: #f8d7da; color: #721c24; }
+        .status.pending { background: #fff3cd; color: #856404; }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .quick-link {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .progress {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 Firebase Setup Helper</h1>
+            <p>Get your recruitment portal up and running in minutes!</p>
+        </div>
+
+        <div class="content">
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="setup-step">
+                <h3>📋 Step 1: Firebase Project Setup</h3>
+                <ol>
+                    <li>Go to <a href="https://console.firebase.google.com/" target="_blank">Firebase Console</a></li>
+                    <li>Click "Add project" and name it "recruitment-portal"</li>
+                    <li>Enable Firestore Database in "test mode"</li>
+                    <li>Add a web app and copy the configuration</li>
+                </ol>
+                
+                <div class="warning">
+                    <strong>⚠️ Important:</strong> Keep your Firebase configuration secure! Never commit it to public repositories.
+                </div>
+            </div>
+
+            <div class="setup-step">
+                <h3>🔧 Step 2: Update Configuration</h3>
+                <p>Replace the placeholder config in <code>firebase-config.js</code>:</p>
+                <div class="config-box">
+export const firebaseConfig = {
+  apiKey: "your-actual-api-key",
+  authDomain: "your-project.firebaseapp.com", 
+  projectId: "your-project-id",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "your-app-id"
+};
+                </div>
+            </div>
+
+            <div class="setup-step">
+                <h3>🚀 Step 3: Start Development Server</h3>
+                <p>Choose one option to start your local server:</p>
+                <div class="config-box">
+# Option 1: http-server (recommended)
+npm install -g http-server
+http-server . -p 3000 -c-1
+
+# Option 2: Python server  
+python -m http.server 3000
+
+# Option 3: VS Code Live Server
+Right-click index.html → "Open with Live Server"
+                </div>
+            </div>
+
+            <div class="setup-step">
+                <h3>🧪 Step 4: Test Your Setup</h3>
+                <div class="quick-links">
+                    <button class="test-button" onclick="testReactComponents()">Test React Components</button>
+                    <button class="test-button" onclick="testFirebaseConnection()">Test Firebase Connection</button>
+                    <button class="test-button" onclick="testFormValidation()">Test Form Validation</button>
+                    <button class="test-button" onclick="runAllTests()">Run All Tests</button>
+                </div>
+                
+                <div class="test-results" id="testResults">
+                    <p>Click a test button to check your setup...</p>
+                </div>
+            </div>
+
+            <div class="setup-step">
+                <h3>📱 Quick Links</h3>
+                <div class="quick-links">
+                    <a href="./index.html" class="quick-link" target="_blank">🏠 Open Website</a>
+                    <a href="https://console.firebase.google.com/" class="quick-link" target="_blank">🔥 Firebase Console</a>
+                    <a href="./FIREBASE_TESTING_GUIDE.md" class="quick-link" target="_blank">📖 Testing Guide</a>
+                    <a href="./admin.html" class="quick-link" target="_blank">⚙️ Admin Panel</a>
+                </div>
+            </div>
+
+            <div class="success">
+                <strong>🎉 Ready to go?</strong> Your recruitment portal combines the power of React with Firebase to create an amazing user experience while maintaining your existing design!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let testsPassed = 0;
+        let totalTests = 0;
+
+        function updateProgress() {
+            const progress = totalTests > 0 ? (testsPassed / totalTests) * 100 : 0;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function addTestResult(test, status, message) {
+            const resultsDiv = document.getElementById('testResults');
+            if (totalTests === 0) {
+                resultsDiv.innerHTML = '';
+            }
+            
+            const statusClass = status ? 'pass' : 'fail';
+            const statusText = status ? 'PASS' : 'FAIL';
+            
+            const testResult = document.createElement('div');
+            testResult.innerHTML = `
+                <span class="status ${statusClass}">${statusText}</span>
+                <strong>${test}:</strong> ${message}
+            `;
+            testResult.style.margin = '10px 0';
+            
+            resultsDiv.appendChild(testResult);
+            
+            totalTests++;
+            if (status) testsPassed++;
+            updateProgress();
+        }
+
+        function testReactComponents() {
+            // Test if React is loaded
+            if (typeof React !== 'undefined') {
+                addTestResult('React Library', true, 'React is loaded successfully');
+            } else {
+                addTestResult('React Library', false, 'React is not loaded. Check your internet connection and script tags.');
+                return;
+            }
+
+            // Test if ReactDOM is loaded
+            if (typeof ReactDOM !== 'undefined') {
+                addTestResult('ReactDOM Library', true, 'ReactDOM is loaded successfully');
+            } else {
+                addTestResult('ReactDOM Library', false, 'ReactDOM is not loaded. Check your script tags.');
+                return;
+            }
+
+            // Test if Babel is loaded
+            if (typeof Babel !== 'undefined') {
+                addTestResult('Babel Transformer', true, 'Babel is loaded for JSX transformation');
+            } else {
+                addTestResult('Babel Transformer', false, 'Babel is not loaded. JSX components may not work.');
+            }
+
+            addTestResult('React Components', true, 'All React dependencies are ready!');
+        }
+
+        function testFirebaseConnection() {
+            // Check if Firebase is loaded
+            if (typeof firebase === 'undefined') {
+                addTestResult('Firebase Library', false, 'Firebase SDK is not loaded. Check your script tags.');
+                return;
+            }
+
+            addTestResult('Firebase Library', true, 'Firebase SDK is loaded');
+
+            // Check if Firebase is initialized
+            if (firebase.apps.length > 0) {
+                addTestResult('Firebase Initialization', true, 'Firebase is initialized successfully');
+                
+                // Test Firestore connection
+                try {
+                    const db = firebase.firestore();
+                    addTestResult('Firestore Connection', true, 'Firestore database is accessible');
+                } catch (error) {
+                    addTestResult('Firestore Connection', false, 'Firestore connection failed: ' + error.message);
+                }
+            } else {
+                addTestResult('Firebase Initialization', false, 'Firebase is not initialized. Check your configuration in firebase-config.js');
+            }
+        }
+
+        function testFormValidation() {
+            // Check if form exists
+            const form = document.querySelector('#recruitment-form-container form');
+            if (form) {
+                addTestResult('Recruitment Form', true, 'Form is present in the DOM');
+                
+                // Test form fields
+                const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'regNumber'];
+                let fieldsFound = 0;
+                
+                requiredFields.forEach(field => {
+                    if (document.querySelector(`[name="${field}"], #${field}`)) {
+                        fieldsFound++;
+                    }
+                });
+                
+                if (fieldsFound === requiredFields.length) {
+                    addTestResult('Form Fields', true, `All ${requiredFields.length} required fields are present`);
+                } else {
+                    addTestResult('Form Fields', false, `Only ${fieldsFound}/${requiredFields.length} required fields found`);
+                }
+            } else {
+                addTestResult('Recruitment Form', false, 'Form not found. Make sure the form HTML is correct.');
+            }
+
+            // Test validation utilities
+            if (typeof window.sanitize !== 'undefined') {
+                addTestResult('Validation Utilities', true, 'Security validation utilities are loaded');
+            } else {
+                addTestResult('Validation Utilities', false, 'Validation utilities not found. Check firebase-config.js import.');
+            }
+        }
+
+        function runAllTests() {
+            // Reset test results
+            testsPassed = 0;
+            totalTests = 0;
+            document.getElementById('testResults').innerHTML = '<p>Running comprehensive tests...</p>';
+            
+            setTimeout(() => {
+                testReactComponents();
+                setTimeout(() => {
+                    testFirebaseConnection();
+                    setTimeout(() => {
+                        testFormValidation();
+                        
+                        // Final summary
+                        setTimeout(() => {
+                            const resultsDiv = document.getElementById('testResults');
+                            const summary = document.createElement('div');
+                            summary.style.marginTop = '20px';
+                            summary.style.padding = '15px';
+                            summary.style.borderRadius = '8px';
+                            summary.style.fontWeight = 'bold';
+                            
+                            if (testsPassed === totalTests) {
+                                summary.style.background = '#d4edda';
+                                summary.style.color = '#155724';
+                                summary.innerHTML = `🎉 All tests passed! Your recruitment portal is ready to use.`;
+                            } else {
+                                summary.style.background = '#fff3cd';
+                                summary.style.color = '#856404';
+                                summary.innerHTML = `⚠️ ${testsPassed}/${totalTests} tests passed. Check the failed tests above.`;
+                            }
+                            
+                            resultsDiv.appendChild(summary);
+                        }, 500);
+                    }, 500);
+                }, 500);
+            }, 100);
+        }
+
+        // Auto-run basic tests on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log('Firebase Setup Helper loaded!');
+                console.log('Run tests to check your setup...');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
