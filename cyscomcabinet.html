@@ -640,7 +640,6 @@
                 window.addEventListener('beforeunload', async (e) => {
                     if (this.currentUser) {
                         try {
-                            // Use sendBeacon for reliable sign out during page unload
                             console.log('Tab closing - signing out user');
                             await window.firebase.signOut(window.firebase.auth);
                         } catch (error) {

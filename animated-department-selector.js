@@ -325,7 +325,7 @@ function AnimatedDepartmentSelector() {
                         }, selectedDepartments.primary.name)
                     ] : React.createElement('div', {
                         style: { color: '#999', fontSize: '14px' }
-                    }, 'Click to select')
+                    }, '')
                 ]),
                 
                 // Secondary selection
@@ -372,7 +372,7 @@ function AnimatedDepartmentSelector() {
                         }, selectedDepartments.secondary.name)
                     ] : React.createElement('div', {
                         style: { color: '#999', fontSize: '14px' }
-                    }, 'Click to select')
+                    }, '')
                 ])
             ])
         ]),

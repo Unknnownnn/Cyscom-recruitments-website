@@ -15,6 +15,12 @@
     font-family: 'Helvetica';
 }
 
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 *::selection {
     color: #00BFFF;
     background-color: #0D1117;
@@ -115,6 +121,31 @@ body {
     position: relative;
     padding: 0 1vw;
     padding-top: 28vh;
+    
+    /* Responsive background image */
+    background: url('Images/Background.png') center center/cover no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
+    
+    /* Ensure it covers the full window */
+    background-size: cover;
+    background-position: center center;
+    
+    /* Ensure proper scaling on all devices */
+    background-repeat: no-repeat;
+    
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center; */
+}
+
+/* Fallback for devices that don't support background-attachment: fixed */
+@supports not (background-attachment: fixed) {
+    #page1 {
+        background-attachment: scroll;
+    }
 }
 
 #page1 h1 {
@@ -123,7 +154,30 @@ body {
     text-transform: uppercase;
     line-height: 9vw;
     letter-spacing: -8px;
+    
+}
 
+/* Specific styles for main title and year */
+#page1 h1.main-title {
+    font-size: 9vw;
+    line-height: 10vw;
+    letter-spacing: -6px;
+}
+
+#page1 h1.year-title {
+    font-size: 10vw;
+    line-height: 12vw;
+    letter-spacing: -10px;
+    margin-top: -2vw;
+}
+
+/* Responsive spacers */
+.top-spacer {
+    height: 4vh;
+}
+
+.bottom-spacer {
+    height: 8vh;
 }
 
 #video-container {
@@ -782,6 +836,28 @@ body {
     #recruitment-header h2 {
         font-size: 2rem;
     }
+
+    /* Extra small screen title adjustments */
+    #page1 h1.main-title {
+        font-size: 14vw;
+        line-height: 12vw;
+        letter-spacing: -1px;
+    }
+
+    #page1 h1.year-title {
+        font-size: 20vw;
+        line-height: 16vw;
+        letter-spacing: -2px;
+        margin-top: -0.5vw;
+    }
+
+    .top-spacer {
+        height: 10vh;
+    }
+
+    .bottom-spacer {
+        height: 3vh;
+    }
 }
 
 #page5 {
@@ -916,15 +992,51 @@ body {
     }
 
     #page1 {
-        min-height: 70vh;
+        min-height: 100vh; /* Full viewport height on mobile */
         width: 100%;
         padding: 0 3vw;
         padding-top: 25vh;
+        
+        /* Mobile responsive background */
+        background: url('Images/Background.png') center center/cover no-repeat;
+        background-attachment: scroll; /* Better performance on mobile */
+        background-size: cover;
+        background-position: center center;
+        overflow: hidden;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
     #page1 h1 {
         font-size: 15.5vw;
         letter-spacing: -3px;
+    }
+
+    /* Mobile styles for specific titles */
+    #page1 h1.main-title {
+        font-size: 12vw;
+        line-height: 11vw;
+        letter-spacing: -2px;
+    }
+
+    #page1 h1.year-title {
+        font-size: 18vw;
+        line-height: 14vw;
+        letter-spacing: -4px;
+        margin-top: -1vw;
+    }
+
+    /* Mobile spacers */
+    .top-spacer {
+        height: 12vh;
+    }
+
+    .bottom-spacer {
+        height: 5vh;
     }
 
     #video-container {
@@ -2952,5 +3064,56 @@ body {
         width: 50px;
         height: 50px;
         font-size: 18px;
+    }
+}
+
+/* Additional responsive optimizations for background image */
+@media (max-width: 1024px) {
+    #page1 {
+        background-attachment: scroll; /* Better performance on tablets */
+    }
+}
+
+/* Landscape orientation optimizations */
+@media screen and (orientation: landscape) and (max-height: 600px) {
+    #page1 {
+        background-size: cover;
+        background-position: center center;
+        min-height: 100vh;
+    }
+    
+    #page1 h1.main-title {
+        font-size: 12vw;
+        line-height: 10vw;
+    }
+    
+    #page1 h1.year-title {
+        font-size: 15vw;
+        line-height: 12vw;
+    }
+}
+
+/* High-resolution displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    #page1 {
+        background-image: url('Images/Background.png');
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+/* Very wide screens */
+@media (min-width: 1920px) {
+    #page1 {
+        background-size: cover;
+        background-position: center right;
+    }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 2560px) {
+    #page1 {
+        background-size: cover;
+        background-position: center center;
     }
 }
