@@ -1,39 +1,65 @@
 // Firebase Configuration and Security Module
-// This file contains Firebase configuration and security utilities
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// This file initializes Firebase using environment configuration
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export const firebaseConfig = {
-  apiKey: "apikey",
-  authDomain: "authdomain",
-  projectId: "proj",
-  storageBucket: "store",
-  messagingSenderId: "id",
-  appId: "1:1093153228555:web:appid",
-  measurementId: "measure"
-};
+// Firebase Configuration (using CDN approach for compatibility)
+(async function() {
+  console.log('🔥 Starting Firebase configuration...');
+  
+  // Wait for environment configuration to load
+  if (typeof window.FIREBASE_ENV === 'undefined') {
+    console.error('❌ Firebase environment configuration not found. Please load firebase-env.js first.');
+    return;
+  }
+  
+  console.log('✅ Firebase environment found:', window.FIREBASE_ENV);
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+  try {
+    console.log('📦 Loading Firebase modules...');
+    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js');
+    const { getFirestore, collection, addDoc, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js');
+    
+    console.log('🚀 Initializing Firebase app...');
+    // Initialize Firebase with environment configuration
+    const app = initializeApp(window.FIREBASE_ENV.config);
+    const db = getFirestore(app);
+    
+    console.log('🔗 Setting up global Firebase object...');
+    // Make Firebase available globally (only the necessary parts)
+    window.firebase = { 
+      app, 
+      db, 
+      collection, 
+      addDoc, 
+      serverTimestamp,
+      // Include security settings
+      security: window.FIREBASE_ENV.security,
+      environment: window.FIREBASE_ENV.environment
+    };
+    
+    // Set a flag that Firebase is loaded
+    window.firebaseLoaded = true;
+    
+    console.log('✅ Firebase initialized successfully from firebase-config.js');
+    console.log('🔒 Security settings:', window.FIREBASE_ENV.security);
+    console.log('🌍 Environment:', window.FIREBASE_ENV.environment);
+    console.log('📊 Firebase object:', window.firebase);
+    
+    // Dispatch a custom event to notify other scripts
+    window.dispatchEvent(new CustomEvent('firebaseLoaded'));
+    
+  } catch (error) {
+    console.error('❌ Firebase initialization failed:', error);
+    console.error('Error details:', {
+      name: error.name,
+      message: error.message,
+      stack: error.stack
+    });
+    window.firebaseLoaded = false;
+  }
+})();
 
-// Firebase configuration - Replace with your actual Firebase project config
-// export const firebaseConfig = {
-//   apiKey: "your-api-key-here",
-//   authDomain: "your-project.firebaseapp.com",
-//   projectId: "your-project-id",
-//   storageBucket: "your-project.appspot.com",
-//   messagingSenderId: "123456789",
-//   appId: "your-app-id"
-// };
-
-// Security rules for form validation
-export const validationRules = {
+// Security rules for form validation (make available globally)
+window.validationRules = {
   firstName: {
     minLength: 2,
     maxLength: 50,
@@ -76,8 +102,8 @@ export const validationRules = {
   }
 };
 
-// Sanitization utilities
-export const sanitize = {
+// Sanitization utilities (make available globally)
+window.sanitize = {
   // Remove HTML tags and escape special characters
   html: (str) => {
     const div = document.createElement('div');
@@ -96,15 +122,15 @@ export const sanitize = {
   }
 };
 
-// Rate limiting configuration
-export const rateLimiting = {
+// Rate limiting configuration (make available globally)
+window.rateLimiting = {
   submissionCooldown: 30000, // 30 seconds between submissions
   maxAttemptsPerHour: 5,     // Maximum 5 attempts per hour
   blockedDuration: 3600000   // 1 hour block after exceeding limit
 };
 
-// Security headers and CSP
-export const securityConfig = {
+// Security headers and CSP (make available globally)
+window.securityConfig = {
   // Content Security Policy
   csp: {
     'default-src': "'self'",
@@ -127,8 +153,8 @@ export const securityConfig = {
   }
 };
 
-// Department configuration with security validation
-export const departments = {
+// Department configuration with security validation (make available globally)
+window.departments = {
   'technical': {
     name: 'Technical',
     description: 'Hardware, software security, and technical implementations',
@@ -191,8 +217,8 @@ export const departments = {
   }
 };
 
-// Error messages
-export const errorMessages = {
+// Error messages (make available globally)
+window.errorMessages = {
   validation: {
     firstName: 'First name must be 2-50 characters and contain only letters',
     lastName: 'Last name must be 2-50 characters and contain only letters',
@@ -211,8 +237,8 @@ export const errorMessages = {
   }
 };
 
-// Logging configuration for security monitoring
-export const loggingConfig = {
+// Logging configuration for security monitoring (make available globally)
+window.loggingConfig = {
   levels: {
     INFO: 'info',
     WARN: 'warn',

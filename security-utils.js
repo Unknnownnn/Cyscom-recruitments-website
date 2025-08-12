@@ -66,13 +66,13 @@ class SecurityManager {
                 sanitized = sanitized.replace(/[^0-9A-Za-z]/g, '').toUpperCase();
                 break;
             case 'text':
-                // Remove HTML tags and dangerous characters
+                // Remove HTML tags and dangerous characters (but allow common punctuation)
                 sanitized = sanitized.replace(/<[^>]*>/g, '');
-                sanitized = sanitized.replace(/[<>\"'%;()&+]/g, '');
+                sanitized = sanitized.replace(/[<>\"'%;()]/g, ''); // Removed & and + from removal list
                 break;
             default:
-                // General sanitization
-                sanitized = sanitized.replace(/[<>\"'%;()&+]/g, '');
+                // General sanitization (allow common punctuation)
+                sanitized = sanitized.replace(/[<>\"'%;()]/g, ''); // Removed & and + from removal list
         }
 
         return sanitized;
@@ -171,24 +171,31 @@ class SecurityManager {
     // Detect suspicious patterns
     detectSuspiciousActivity(formData) {
         const suspiciousPatterns = [
-            // SQL injection patterns
-            /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION)\b)/i,
+            // SQL injection patterns (more specific)
+            /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION)\s+\w+)/i,
             // XSS patterns
             /<script[^>]*>.*?<\/script>/gi,
             /javascript:/i,
             /on\w+\s*=/i,
-            // Command injection patterns
-            /(\||&|;|`|\$\()/,
+            // Command injection patterns (more specific - avoid false positives)
+            /(\||&|;|`|\$\(){2,}/,  // Multiple consecutive suspicious chars
+            /(;\s*(rm|del|format|shutdown|reboot))/i,  // Dangerous commands
             // Path traversal patterns
             /\.\.\//g,
             // Excessive repetition (spam)
-            /(.)\1{10,}/
+            /(.)\1{15,}/  // Increased threshold from 10 to 15
         ];
 
         for (const [field, value] of Object.entries(formData)) {
             if (typeof value === 'string') {
                 for (const pattern of suspiciousPatterns) {
                     if (pattern.test(value)) {
+                        console.warn('Suspicious pattern detected:', {
+                            field,
+                            pattern: pattern.toString(),
+                            value: value.substring(0, 100),
+                            fullValue: value
+                        });
                         this.logSecurityEvent('SUSPICIOUS_ACTIVITY', {
                             field,
                             pattern: pattern.toString(),
@@ -277,11 +284,11 @@ class SecurityManager {
     }
 }
 
-// Export singleton instance
-export const securityManager = new SecurityManager();
+// Export singleton instance (make available globally)
+window.securityManager = new SecurityManager();
 
-// Additional utility functions
-export const utils = {
+// Additional utility functions (make available globally)
+window.securityUtils = {
     // Generate secure random string
     generateSecureRandom: (length = 32) => {
         const array = new Uint8Array(length);

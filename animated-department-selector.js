@@ -57,19 +57,49 @@ const departments = [
 
 function AnimatedDepartmentSelector() {
     const containerRef = useRef(null);
-    const [selectedDepartment, setSelectedDepartment] = useState(null);
+    const [selectedDepartments, setSelectedDepartments] = useState({
+        primary: null,
+        secondary: null
+    });
     const [scrollProgress, setScrollProgress] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [selectionMode, setSelectionMode] = useState('primary'); // 'primary' or 'secondary'
 
-    // Update hidden input when department is selected
+    // Update hidden inputs when departments are selected
     useEffect(() => {
-        const hiddenInput = document.getElementById('department-hidden');
-        if (hiddenInput && selectedDepartment) {
-            hiddenInput.value = selectedDepartment.id;
+        const primaryInput = document.getElementById('department-primary');
+        const secondaryInput = document.getElementById('department-secondary');
+        
+        if (primaryInput && selectedDepartments.primary) {
+            primaryInput.value = selectedDepartments.primary.id;
             const event = new Event('change', { bubbles: true });
-            hiddenInput.dispatchEvent(event);
+            primaryInput.dispatchEvent(event);
         }
-    }, [selectedDepartment]);
+        
+        if (secondaryInput && selectedDepartments.secondary) {
+            secondaryInput.value = selectedDepartments.secondary.id;
+            const event = new Event('change', { bubbles: true });
+            secondaryInput.dispatchEvent(event);
+        }
+    }, [selectedDepartments]);
+
+    // Handle reset event from form submission
+    useEffect(() => {
+        const handleReset = () => {
+            setSelectedDepartments({
+                primary: null,
+                secondary: null
+            });
+            setSelectionMode('primary');
+        };
+
+        window.addEventListener('resetDepartmentSelector', handleReset);
+        
+        // Cleanup
+        return () => {
+            window.removeEventListener('resetDepartmentSelector', handleReset);
+        };
+    }, []);
 
     // Handle scroll progress
     useEffect(() => {
@@ -92,7 +122,32 @@ function AnimatedDepartmentSelector() {
     }, []);
 
     const handleDepartmentClick = (department, index) => {
-        setSelectedDepartment(department);
+        if (selectionMode === 'primary') {
+            // If clicking the same department that's already secondary, swap them
+            if (selectedDepartments.secondary?.id === department.id) {
+                setSelectedDepartments(prev => ({
+                    primary: department,
+                    secondary: prev.primary
+                }));
+            } else {
+                setSelectedDepartments(prev => ({
+                    ...prev,
+                    primary: department
+                }));
+            }
+        } else {
+            // Secondary selection mode
+            // Don't allow same department for both preferences
+            if (selectedDepartments.primary?.id === department.id) {
+                alert('Please choose a different department for your second preference.');
+                return;
+            }
+            
+            setSelectedDepartments(prev => ({
+                ...prev,
+                secondary: department
+            }));
+        }
         
         // Scroll to center the selected department
         if (containerRef.current) {
@@ -154,7 +209,7 @@ function AnimatedDepartmentSelector() {
                         cx: '50',
                         cy: '50',
                         r: '30',
-                        stroke: selectedDepartment ? selectedDepartment.color : '#667eea',
+                        stroke: selectedDepartments.primary ? selectedDepartments.primary.color : '#667eea',
                         strokeWidth: '8',
                         fill: 'none',
                         strokeDasharray: '188.4', // 2 * π * 30
@@ -167,70 +222,182 @@ function AnimatedDepartmentSelector() {
             ])
         ),
 
+        // Selection mode toggle and current department indicator
+        React.createElement('div', {
+            key: 'selection-controls',
+            style: {
+                textAlign: 'center',
+                marginBottom: '20px'
+            }
+        }, [
+            React.createElement('div', {
+                key: 'mode-toggle',
+                style: {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '10px',
+                    marginBottom: '20px'
+                }
+            }, [
+                React.createElement('button', {
+                    key: 'primary-btn',
+                    onClick: () => setSelectionMode('primary'),
+                    style: {
+                        padding: '8px 16px',
+                        borderRadius: '20px',
+                        border: 'none',
+                        background: selectionMode === 'primary' ? '#667eea' : '#f0f0f0',
+                        color: selectionMode === 'primary' ? 'white' : '#333',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                    }
+                }, '1st Preference'),
+                React.createElement('button', {
+                    key: 'secondary-btn',
+                    onClick: () => setSelectionMode('secondary'),
+                    style: {
+                        padding: '8px 16px',
+                        borderRadius: '20px',
+                        border: 'none',
+                        background: selectionMode === 'secondary' ? '#667eea' : '#f0f0f0',
+                        color: selectionMode === 'secondary' ? 'white' : '#333',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                    }
+                }, '2nd Preference')
+            ]),
+            
+            // Current selections display
+            React.createElement('div', {
+                key: 'selections-display',
+                style: {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '30px',
+                    flexWrap: 'wrap',
+                    minHeight: '120px',
+                    alignItems: 'center'
+                }
+            }, [
+                // Primary selection
+                React.createElement('div', {
+                    key: 'primary-display',
+                    style: {
+                        textAlign: 'center',
+                        padding: '15px',
+                        borderRadius: '12px',
+                        border: selectedDepartments.primary ? `2px solid ${selectedDepartments.primary.color}` : '2px dashed #ddd',
+                        minWidth: '200px',
+                        transition: 'all 0.3s ease',
+                        opacity: selectionMode === 'primary' ? 1 : 0.7
+                    }
+                }, [
+                    React.createElement('div', {
+                        key: 'primary-label',
+                        style: {
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            color: selectedDepartments.primary ? selectedDepartments.primary.color : '#999',
+                            marginBottom: '8px'
+                        }
+                    }, '1st Preference'),
+                    selectedDepartments.primary ? [
+                        React.createElement('img', {
+                            key: 'primary-icon',
+                            src: selectedDepartments.primary.icon,
+                            alt: selectedDepartments.primary.name,
+                            style: {
+                                width: '40px',
+                                height: '40px',
+                                objectFit: 'contain',
+                                marginBottom: '8px'
+                            }
+                        }),
+                        React.createElement('div', {
+                            key: 'primary-name',
+                            style: {
+                                fontWeight: 'bold',
+                                color: selectedDepartments.primary.color,
+                                fontSize: '14px'
+                            }
+                        }, selectedDepartments.primary.name)
+                    ] : React.createElement('div', {
+                        style: { color: '#999', fontSize: '14px' }
+                    }, 'Click to select')
+                ]),
+                
+                // Secondary selection
+                React.createElement('div', {
+                    key: 'secondary-display',
+                    style: {
+                        textAlign: 'center',
+                        padding: '15px',
+                        borderRadius: '12px',
+                        border: selectedDepartments.secondary ? `2px solid ${selectedDepartments.secondary.color}` : '2px dashed #ddd',
+                        minWidth: '200px',
+                        transition: 'all 0.3s ease',
+                        opacity: selectionMode === 'secondary' ? 1 : 0.7
+                    }
+                }, [
+                    React.createElement('div', {
+                        key: 'secondary-label',
+                        style: {
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            color: selectedDepartments.secondary ? selectedDepartments.secondary.color : '#999',
+                            marginBottom: '8px'
+                        }
+                    }, '2nd Preference'),
+                    selectedDepartments.secondary ? [
+                        React.createElement('img', {
+                            key: 'secondary-icon',
+                            src: selectedDepartments.secondary.icon,
+                            alt: selectedDepartments.secondary.name,
+                            style: {
+                                width: '40px',
+                                height: '40px',
+                                objectFit: 'contain',
+                                marginBottom: '8px'
+                            }
+                        }),
+                        React.createElement('div', {
+                            key: 'secondary-name',
+                            style: {
+                                fontWeight: 'bold',
+                                color: selectedDepartments.secondary.color,
+                                fontSize: '14px'
+                            }
+                        }, selectedDepartments.secondary.name)
+                    ] : React.createElement('div', {
+                        style: { color: '#999', fontSize: '14px' }
+                    }, 'Click to select')
+                ])
+            ])
+        ]),
+
         // Current department indicator
         React.createElement('div', {
             key: 'current-indicator',
             style: {
                 textAlign: 'center',
                 marginBottom: '30px',
-                minHeight: '80px',
+                minHeight: '60px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 transition: 'all 0.3s ease'
             }
         }, 
-            selectedDepartment ? [
-                React.createElement('img', {
-                    key: 'selected-icon',
-                    src: selectedDepartment.icon,
-                    alt: selectedDepartment.name,
-                    style: {
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'contain',
-                        marginBottom: '15px',
-                        animation: 'bounce 0.6s ease',
-                        filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.2))'
-                    },
-                    onError: (e) => {
-                        // Fallback to emoji if image fails to load
-                        e.target.style.display = 'none';
-                        const fallback = document.createElement('div');
-                        fallback.textContent = '📁';
-                        fallback.style.fontSize = '2.5rem';
-                        fallback.style.marginBottom = '10px';
-                        e.target.parentNode.insertBefore(fallback, e.target);
-                    }
-                }),
-                React.createElement('h3', {
-                    key: 'selected-name',
-                    style: {
-                        color: selectedDepartment.color,
-                        margin: '0 0 8px 0',
-                        fontSize: '1.4rem',
-                        fontWeight: 'bold'
-                    }
-                }, selectedDepartment.name),
-                React.createElement('p', {
-                    key: 'selected-desc',
-                    style: {
-                        color: '#666',
-                        margin: '0',
-                        fontSize: '1rem',
-                        fontStyle: 'italic'
-                    }
-                }, selectedDepartment.description)
-            ] : [
-                React.createElement('p', {
-                    key: 'instruction',
-                    style: {
-                        color: '#999',
-                        fontSize: '1.1rem',
-                        margin: '0'
-                    }
-                }, 'Scroll through departments and click to select')
-            ]
+            React.createElement('p', {
+                key: 'instruction',
+                style: {
+                    color: '#666',
+                    fontSize: '1rem',
+                    margin: '0'
+                }
+            }, `Select your ${selectionMode === 'primary' ? '1st' : '2nd'} preference by clicking a department below`)
         ),
 
         // Scrollable department list
@@ -254,10 +421,14 @@ function AnimatedDepartmentSelector() {
             onMouseUp: (e) => e.currentTarget.style.cursor = 'grab',
             onMouseLeave: (e) => e.currentTarget.style.cursor = 'grab'
         }, 
-            departments.map((dept, index) => 
-                React.createElement('div', {
+            departments.map((dept, index) => {
+                const isPrimary = selectedDepartments.primary?.id === dept.id;
+                const isSecondary = selectedDepartments.secondary?.id === dept.id;
+                const isSelected = isPrimary || isSecondary;
+                
+                return React.createElement('div', {
                     key: dept.id,
-                    className: `department-card ${selectedDepartment?.id === dept.id ? 'selected-department' : ''}`,
+                    className: `department-card ${isSelected ? 'selected-department' : ''}`,
                     onClick: () => handleDepartmentClick(dept, index),
                     style: {
                         minWidth: '250px',
@@ -274,20 +445,20 @@ function AnimatedDepartmentSelector() {
                         overflow: 'hidden',
                         scrollSnapAlign: 'center',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        transform: selectedDepartment?.id === dept.id ? 'scale(1.05)' : 'scale(1)',
-                        boxShadow: selectedDepartment?.id === dept.id 
+                        transform: isSelected ? 'scale(1.05)' : 'scale(1)',
+                        boxShadow: isSelected 
                             ? `0 12px 30px ${dept.color}50, 0 0 0 3px ${dept.color}` 
                             : '0 6px 20px rgba(0,0,0,0.15)',
-                        filter: selectedDepartment?.id === dept.id ? 'brightness(1.1)' : 'brightness(1)'
+                        filter: isSelected ? 'brightness(1.1)' : 'brightness(1)'
                     },
                     onMouseEnter: (e) => {
-                        if (selectedDepartment?.id !== dept.id) {
+                        if (!isSelected) {
                             e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)';
                             e.currentTarget.style.boxShadow = `0 8px 25px ${dept.color}30`;
                         }
                     },
                     onMouseLeave: (e) => {
-                        if (selectedDepartment?.id !== dept.id) {
+                        if (!isSelected) {
                             e.currentTarget.style.transform = 'scale(1)';
                             e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
                         }
@@ -335,9 +506,9 @@ function AnimatedDepartmentSelector() {
                             lineHeight: '1.3'
                         }
                     }, dept.description),
-                    // Selection indicator
-                    selectedDepartment?.id === dept.id && React.createElement('div', {
-                        key: 'selected-indicator',
+                    // Selection indicators
+                    isPrimary && React.createElement('div', {
+                        key: 'primary-indicator',
                         style: {
                             position: 'absolute',
                             top: '15px',
@@ -350,13 +521,32 @@ function AnimatedDepartmentSelector() {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            fontSize: '1.2rem',
+                            fontSize: '1rem',
                             fontWeight: 'bold',
                             animation: 'checkmark 0.5s ease'
                         }
-                    }, '✓')
+                    }, '1st'),
+                    isSecondary && React.createElement('div', {
+                        key: 'secondary-indicator',
+                        style: {
+                            position: 'absolute',
+                            top: '15px',
+                            right: '15px',
+                            width: '35px',
+                            height: '35px',
+                            background: 'rgba(255,255,255,0.9)',
+                            color: dept.color,
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '1rem',
+                            fontWeight: 'bold',
+                            animation: 'checkmark 0.5s ease'
+                        }
+                    }, '2nd')
                 ])
-            )
+            })
         ),
 
         // Progress dots
@@ -387,7 +577,7 @@ function AnimatedDepartmentSelector() {
         ),
 
         // Scroll hint
-        !selectedDepartment && React.createElement('div', {
+        (!selectedDepartments.primary && !selectedDepartments.secondary) && React.createElement('div', {
             key: 'scroll-hint',
             style: {
                 textAlign: 'center',
@@ -471,15 +661,38 @@ function mountAnimatedDepartmentSelector() {
 
 // Fallback selector without animations
 function createFallbackSelector(container) {
+    let selectedDepartments = { primary: null, secondary: null };
+    let selectionMode = 'primary';
+    
     container.innerHTML = `
         <div style="text-align: center; margin: 20px 0;">
-            <h4>Choose Your Department</h4>
+            <h4>Choose Your Departments</h4>
+            
+            <!-- Mode Toggle -->
+            <div style="margin: 20px 0;">
+                <button id="primary-mode-btn" style="padding: 8px 16px; margin: 0 5px; border: none; border-radius: 20px; background: #667eea; color: white; cursor: pointer;">1st Preference</button>
+                <button id="secondary-mode-btn" style="padding: 8px 16px; margin: 0 5px; border: none; border-radius: 20px; background: #f0f0f0; color: #333; cursor: pointer;">2nd Preference</button>
+            </div>
+            
+            <!-- Selection Display -->
+            <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap;">
+                <div id="primary-display" style="border: 2px dashed #ddd; padding: 15px; border-radius: 12px; min-width: 150px;">
+                    <div style="font-size: 12px; font-weight: bold; color: #999; margin-bottom: 8px;">1st Preference</div>
+                    <div id="primary-content" style="color: #999;">Click to select</div>
+                </div>
+                <div id="secondary-display" style="border: 2px dashed #ddd; padding: 15px; border-radius: 12px; min-width: 150px;">
+                    <div style="font-size: 12px; font-weight: bold; color: #999; margin-bottom: 8px;">2nd Preference</div>
+                    <div id="secondary-content" style="color: #999;">Click to select</div>
+                </div>
+            </div>
+            
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; max-width: 800px; margin: 20px auto;">
                 ${departments.map(dept => `
-                    <div onclick="selectDepartment('${dept.id}', '${dept.name}')" 
+                    <div onclick="selectDepartmentFallback('${dept.id}', '${dept.name}')" 
                          style="background: ${dept.gradient}; color: white; padding: 20px; border-radius: 10px; cursor: pointer; text-align: center; transition: transform 0.2s; border: 3px solid transparent;"
                          onmouseover="this.style.transform='scale(1.02)'"
-                         onmouseout="this.style.transform='scale(1)'">
+                         onmouseout="this.style.transform='scale(1)'"
+                         id="dept-card-${dept.id}">
                         <img src="${dept.icon}" alt="${dept.name}" style="width: 50px; height: 50px; object-fit: contain; margin-bottom: 10px; filter: brightness(1.1);" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <div style="font-size: 2rem; margin-bottom: 10px; display: none;">📁</div>
                         <h3 style="margin: 0 0 5px 0;">${dept.name}</h3>
@@ -491,20 +704,115 @@ function createFallbackSelector(container) {
     `;
     
     // Add global function to select department
-    window.selectDepartment = function(id, name) {
-        const hiddenInput = document.getElementById('department-hidden');
-        if (hiddenInput) {
-            hiddenInput.value = id;
-            const event = new Event('change', { bubbles: true });
-            hiddenInput.dispatchEvent(event);
+    window.selectDepartmentFallback = function(id, name) {
+        const dept = departments.find(d => d.id === id);
+        if (!dept) return;
+        
+        if (selectionMode === 'primary') {
+            // If clicking the same department that's already secondary, swap them
+            if (selectedDepartments.secondary?.id === id) {
+                selectedDepartments.primary = dept;
+                selectedDepartments.secondary = selectedDepartments.primary;
+            } else {
+                selectedDepartments.primary = dept;
+            }
+        } else {
+            // Don't allow same department for both preferences
+            if (selectedDepartments.primary?.id === id) {
+                alert('Please choose a different department for your second preference.');
+                return;
+            }
+            selectedDepartments.secondary = dept;
         }
         
-        // Visual feedback
-        const cards = container.querySelectorAll('div[onclick]');
-        cards.forEach(card => {
-            card.style.border = card.getAttribute('onclick').includes(id) ? '3px solid white' : '3px solid transparent';
-        });
+        updateFallbackDisplay();
+        updateHiddenInputs();
     };
+    
+    // Mode toggle functionality
+    document.getElementById('primary-mode-btn').onclick = function() {
+        selectionMode = 'primary';
+        document.getElementById('primary-mode-btn').style.background = '#667eea';
+        document.getElementById('primary-mode-btn').style.color = 'white';
+        document.getElementById('secondary-mode-btn').style.background = '#f0f0f0';
+        document.getElementById('secondary-mode-btn').style.color = '#333';
+    };
+    
+    document.getElementById('secondary-mode-btn').onclick = function() {
+        selectionMode = 'secondary';
+        document.getElementById('secondary-mode-btn').style.background = '#667eea';
+        document.getElementById('secondary-mode-btn').style.color = 'white';
+        document.getElementById('primary-mode-btn').style.background = '#f0f0f0';
+        document.getElementById('primary-mode-btn').style.color = '#333';
+    };
+    
+    function updateFallbackDisplay() {
+        const primaryDisplay = document.getElementById('primary-display');
+        const secondaryDisplay = document.getElementById('secondary-display');
+        const primaryContent = document.getElementById('primary-content');
+        const secondaryContent = document.getElementById('secondary-content');
+        
+        if (selectedDepartments.primary) {
+            primaryDisplay.style.border = `2px solid ${selectedDepartments.primary.color}`;
+            primaryContent.innerHTML = `
+                <img src="${selectedDepartments.primary.icon}" style="width: 30px; height: 30px; margin-bottom: 5px;"><br>
+                <strong style="color: ${selectedDepartments.primary.color};">${selectedDepartments.primary.name}</strong>
+            `;
+        } else {
+            primaryDisplay.style.border = '2px dashed #ddd';
+            primaryContent.innerHTML = 'Click to select';
+        }
+        
+        if (selectedDepartments.secondary) {
+            secondaryDisplay.style.border = `2px solid ${selectedDepartments.secondary.color}`;
+            secondaryContent.innerHTML = `
+                <img src="${selectedDepartments.secondary.icon}" style="width: 30px; height: 30px; margin-bottom: 5px;"><br>
+                <strong style="color: ${selectedDepartments.secondary.color};">${selectedDepartments.secondary.name}</strong>
+            `;
+        } else {
+            secondaryDisplay.style.border = '2px dashed #ddd';
+            secondaryContent.innerHTML = 'Click to select';
+        }
+        
+        // Update card indicators
+        departments.forEach(dept => {
+            const card = document.getElementById(`dept-card-${dept.id}`);
+            if (card) {
+                const isPrimary = selectedDepartments.primary?.id === dept.id;
+                const isSecondary = selectedDepartments.secondary?.id === dept.id;
+                
+                if (isPrimary) {
+                    card.style.border = `3px solid white`;
+                    card.innerHTML = card.innerHTML.replace(/<div[^>]*class="indicator"[^>]*>.*?<\/div>/, '') + 
+                                    '<div class="indicator" style="position: absolute; top: 10px; right: 10px; background: white; color: ' + dept.color + '; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold;">1st</div>';
+                } else if (isSecondary) {
+                    card.style.border = `3px solid white`;
+                    card.innerHTML = card.innerHTML.replace(/<div[^>]*class="indicator"[^>]*>.*?<\/div>/, '') + 
+                                    '<div class="indicator" style="position: absolute; top: 10px; right: 10px; background: white; color: ' + dept.color + '; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold;">2nd</div>';
+                } else {
+                    card.style.border = '3px solid transparent';
+                    card.innerHTML = card.innerHTML.replace(/<div[^>]*class="indicator"[^>]*>.*?<\/div>/, '');
+                }
+            }
+        });
+    }
+    
+    function updateHiddenInputs() {
+        const primaryInput = document.getElementById('department-primary');
+        const secondaryInput = document.getElementById('department-secondary');
+        
+        if (primaryInput && selectedDepartments.primary) {
+            primaryInput.value = selectedDepartments.primary.id;
+            const event = new Event('change', { bubbles: true });
+            primaryInput.dispatchEvent(event);
+        }
+        
+        if (secondaryInput && selectedDepartments.secondary) {
+            secondaryInput.value = selectedDepartments.secondary.id;
+            const event = new Event('change', { bubbles: true });
+            secondaryInput.dispatchEvent(event);
+        }
+    }
 }
 
 // Initialize when DOM is ready
