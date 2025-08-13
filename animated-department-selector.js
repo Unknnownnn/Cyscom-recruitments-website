@@ -9,9 +9,9 @@ const departments = [
         id: 'technical',
         name: 'Technical',
         description: 'CTFs, Ethical Hacking and more',
-        color: '#ff6b6b',
+        color: '#2f86e9ff',
         icon: './Images/Tech.png',
-        gradient: 'linear-gradient(135deg, #ff6b6b, #ff5722)'
+        gradient: 'linear-gradient(135deg, #013066, #094488ff)'
     },
     {
         id: 'design',
@@ -19,23 +19,23 @@ const departments = [
         description: 'UI/UX design and graphics',
         color: '#4ecdc4',
         icon: './Images/Design.png',
-        gradient: 'linear-gradient(135deg, #4ecdc4, #26c6da)'
+        gradient: 'linear-gradient(135deg, #094488ff, #0859b6ff)'
     },
     {
         id: 'dev',
         name: 'Development',
         description: 'Web development',
-        color: '#45b7d1',
+        color: '#141e36',
         icon: './Images/dEV.png',
-        gradient: 'linear-gradient(135deg, #45b7d1, #2196f3)'
+        gradient: 'linear-gradient(135deg, #0859b6ff, #1f7ae2ff)'
     },
     {
         id: 'social-media',
         name: 'Social Media',
         description: 'Social media management and digital marketing',
-        color: '#f7b731',
+        color: '#0484ac',
         icon: './Images/SM.png',
-        gradient: 'linear-gradient(135deg, #f7b731, #ff9800)'
+        gradient: 'linear-gradient(135deg, #1f7ae2ff, #4778d3ff)'
     },
     {
         id: 'content',
@@ -43,15 +43,15 @@ const departments = [
         description: 'Content creation, writing, and documentation',
         color: '#5f27cd',
         icon: './Images/Content.png',
-        gradient: 'linear-gradient(135deg, #5f27cd, #673ab7)'
+        gradient: 'linear-gradient(135deg, #4778d3ff, #3360b4ff)'
     },
     {
         id: 'event-management',
         name: 'Event Management',
         description: 'Event planning, coordination, and execution',
-        color: '#00d2d3',
+        color: '#172cecff',
         icon: './Images/EM.png',
-        gradient: 'linear-gradient(135deg, #00d2d3, #1dd1a1)'
+        gradient: 'linear-gradient(135deg, #3360b4ff, #214994ff)'
     }
 ];
 

@@ -65,10 +65,123 @@
         </div>
         <div id="page2">
             <div id="slider-container">
-                <button id="prev-btn" class="slider-nav">
-                    <i class="ri-arrow-left-s-line"></i>
-                </button>
                 <div id="slider-wrapper">
+                    <!-- Original slides -->
+                    <div id="elem1" class="elem">
+                        <img data-scroll data-scroll-speed="1"
+                            src="Images\Tech.png"
+                            alt="" style="width:280px; height:auto;">
+                        <div data-scroll data-scroll-speed="-2" class="dets">
+                            <div class="dets-info" style="background-color: #013066;">
+                                <i class="ri-circle-fill"></i>
+                                <p><b>TECHNICAL</b></p>
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                            <div class="container" style="background-color: #06b1bd;">
+                                <div class="listing">
+                                    <div class="list-elem">
+                                        <p>CYSCOM RECRUITMENTS</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="elem2" class="elem">
+                        <img data-scroll data-scroll-speed="1"
+                            src="Images\Design.png"
+                            alt="" style="width:420px; height:auto;">
+                        <div data-scroll data-scroll-speed="-2" class="dets">
+                            <div class="dets-info" style="background-color: #0484ac;">
+                                <i class="ri-circle-fill"></i>
+                                <p><b>DESIGN</b></p>
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                            <div class="container" style="background-color: #06b1bd;">
+                                <div class="listing">
+                                    <div class="list-elem">
+                                        <p>CYSCOM RECRUITMENTS</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="elem3" class="elem">
+                        <img data-scroll data-scroll-speed="1"
+                            src="Images\dEV.png"
+                            alt="" style="width:250px; height:auto;">
+                        <div data-scroll data-scroll-speed="-2" class="dets">
+                            <div class="dets-info" style="background-color: #040277;">
+                                <i class="ri-circle-fill"></i>
+                                <p><b>DEV</b></p>
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                            <div class="container" style="background-color: #0484ac;">
+                                <div class="listing">
+                                    <div class="list-elem">
+                                        <p>CYSCOM RECRUITMENTS</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="elem4" class="elem">
+                        <img data-scroll data-scroll-speed="1"
+                            src="Images\SM.png"
+                            alt="" style="width:320px; height:auto;">
+                        <div data-scroll data-scroll-speed="-2" class="dets">
+                            <div class="dets-info" style="background-color: #2c4cb8;">
+                                <i class="ri-circle-fill"></i>
+                                <p><b>SOCIAL MEDIA</b></p>
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                            <div class="container" style="background-color: #0484ac;">
+                                <div class="listing">
+                                    <div class="list-elem">
+                                        <p>ETHICAL HACKING</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="elem5" class="elem">
+                        <img data-scroll data-scroll-speed="1"
+                            src="Images\Content.png"
+                            alt="" style="width:250px; height:auto;">
+                        <div data-scroll data-scroll-speed="-2" class="dets">
+                            <div class="dets-info" style="background-color: #37288a;">
+                                <i class="ri-circle-fill"></i>
+                                <p><b>CONTENT</b></p>
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                            <div class="container" style="background-color: #0484ac;">
+                                <div class="listing">
+                                    <div class="list-elem">
+                                        <p>NETWORK SECURITY</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="elem6" class="elem">
+                        <img data-scroll data-scroll-speed="1"
+                            src="Images\EM.png"
+                            alt="" style="width:250px; height:auto;">
+                        <div data-scroll data-scroll-speed="-2" class="dets">
+                            <div class="dets-info" style="background-color: #3e0699;">
+                                <i class="ri-circle-fill"></i>
+                                <p><b>EVENT MANAGEMENT</b></p>
+                                <i class="ri-arrow-right-s-line"></i>
+                            </div>
+                            <div class="container" style="background-color: #0484ac;">
+                                <div class="listing">
+                                    <div class="list-elem">
+                                        <p>MALWARE ANALYSIS</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Complete duplicate set for seamless looping -->
                     <div id="elem1" class="elem">
                         <img data-scroll data-scroll-speed="1"
                             src="Images\Tech.png"
@@ -184,9 +297,6 @@
                         </div>
                     </div>
                 </div>
-                <button id="next-btn" class="slider-nav">
-                    <i class="ri-arrow-right-s-line"></i>
-                </button>
             </div>
         </div>
         <div id="moto">
@@ -239,7 +349,7 @@
                 
                 <!-- Recruitment Form -->
                 <div id="recruitment-form-container">
-                    <form id="recruitment-form">
+                    <form id="recruitment-form" method="post" action="#" onsubmit="return false;" novalidate>
                         <!-- Personal Information Section -->
                         <div class="form-section">
                             <!-- <h4>Personal Information</h4> -->
@@ -352,11 +462,9 @@
             <div id="footer">
                 <div id="connect">
                     <p>CONNECT WITH US</p>
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
-                    <a href="#">LinkedIn</a>
-                    <a href="#">YouTube</a>
+                    <a href="https://www.instagram.com/cyscomvit">Instagram</a>
+                    <a href="https://x.com/CyscomVit">X</a>
+                    <a href="https://www.linkedin.com/company/cyscomvit/">LinkedIn</a>
                 </div>
                 <div id="logo">
                     <img src="./logo.png" alt="">
@@ -374,16 +482,6 @@
                     <a href="#">Pathways</a>
                     <a href="#">Careers</a>
                 </div>
-            </div>
-            <div id="footer-info">
-                <p>We are proud and privileged to have our home on this land, and to be able to continue the long
-                    tradition of community coming together around food, begun thousands of years ago by First Nations
-                    peoples. As we stand together on this unceded land, we acknowledge our First Nations people, are the
-                    original custodians of this land, and we recognise their deep connection to land, water, sky and
-                    community which continues today. We pay our deep respects to community elders, past, present and
-                    emerging, for they hold the memories, the traditions, the culture and hopes of Aboriginal and Torres
-                    Strait Islander peoples. Always was, always will be Aboriginal land.</p>
-
             </div>
         </div>
     </div>
@@ -486,157 +584,139 @@
                 });
             }
 
-            // Slider functionality
+            // Continuous Auto-Scrolling Infinite Slider
             const slider = document.getElementById('slider-wrapper');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
             const slides = document.querySelectorAll('#page2 .elem');
             
-            let currentIndex = 0;
             const slideWidth = 440; // 400px width + 40px margins
-            const totalSlides = slides.length; // Total number of slides (6)
-            const maxIndex = totalSlides - 1; // Maximum index (5 for 6 slides)
+            const originalSlides = 6; // Number of original slides
+            const totalSlides = slides.length; // Total including duplicates
+            const scrollSpeed = 1.5; // Pixels per frame (adjust for speed)
+            let currentPosition = 0;
+            let animationId;
+            let isPaused = false;
 
-            console.log('Total slides found:', totalSlides); // Debug info
+            console.log('Total slides found:', totalSlides, 'Original slides:', originalSlides);
 
-            function updateSlider() {
-                // Calculate the translate value
-                const translateX = -currentIndex * slideWidth;
-                slider.style.transform = `translateX(${translateX}px)`;
+            // Continuous scrolling animation with perfect seamless loop
+            function continuousScroll() {
+                if (isPaused) {
+                    animationId = requestAnimationFrame(continuousScroll);
+                    return;
+                }
+
+                // Move position continuously
+                currentPosition += scrollSpeed;
                 
-                // Update slide indicator
-                const currentSlideSpan = document.getElementById('current-slide');
-                if (currentSlideSpan) {
-                    currentSlideSpan.textContent = currentIndex + 1;
+                // Apply transform
+                slider.style.transform = `translateX(-${currentPosition}px)`;
+                
+                // Calculate when to reset to avoid any visible gap
+                // Reset when we've scrolled exactly the width of original slides
+                const resetThreshold = originalSlides * slideWidth;
+                
+                // Check if we need to reset (with a small buffer to prevent visual glitches)
+                if (currentPosition >= resetThreshold - scrollSpeed) {
+                    // Instant reset to create seamless loop
+                    currentPosition = 0;
+                    // Don't log every reset to avoid console spam
+                    // console.log('Seamless reset executed');
                 }
                 
-                console.log('Current index:', currentIndex, 'Max index:', maxIndex); // Debug info
+                // Continue animation
+                animationId = requestAnimationFrame(continuousScroll);
+            }
+
+            // Start continuous scrolling
+            function startContinuousScroll() {
+                if (!animationId) {
+                    console.log('Starting continuous scroll...');
+                    continuousScroll();
+                }
+            }
+
+            // Stop continuous scrolling
+            function stopContinuousScroll() {
+                if (animationId) {
+                    console.log('Stopping continuous scroll...');
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+            }
+
+            // Pause scrolling
+            function pauseScroll() {
+                console.log('Pausing scroll...');
+                isPaused = true;
+            }
+
+            // Resume scrolling
+            function resumeScroll() {
+                console.log('Resuming scroll...');
+                isPaused = false;
+            }
+
+            // Initialize slider with proper positioning
+            function initializeSlider() {
+                console.log('Initializing seamless continuous slider...');
                 
-                // Update button states
-                prevBtn.style.opacity = currentIndex === 0 ? '0.3' : '1';
-                prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+                // Ensure no transition interferes
+                slider.style.transition = 'none';
                 
-                nextBtn.style.opacity = currentIndex >= maxIndex ? '0.3' : '1';
-                nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
+                // Start from the beginning
+                currentPosition = 0;
                 
-                // Add visual feedback for button states
-                if (currentIndex === 0) {
-                    prevBtn.style.transform = 'translateY(-50%) scale(0.9)';
+                // Dynamically set the slider wrapper width
+                const calculatedWidth = totalSlides * slideWidth;
+                slider.style.width = `${calculatedWidth}px`;
+                
+                // Position the slider at the start
+                slider.style.transform = `translateX(0px)`;
+                
+                console.log('Slider initialized with:');
+                console.log('- Total slides:', totalSlides);
+                console.log('- Slider width:', calculatedWidth + 'px');
+                console.log('- Reset threshold:', originalSlides * slideWidth + 'px');
+                console.log('- Slide width:', slideWidth + 'px');
+                
+                // Verify we have enough duplicates by checking slide content
+                const allSlides = slider.querySelectorAll('.elem');
+                console.log('- Actual slide elements found:', allSlides.length);
+                
+                // Start continuous scrolling
+                isPaused = false;
+                startContinuousScroll();
+            }
+
+            // Pause on hover
+            const sliderContainer = document.getElementById('slider-container');
+            if (sliderContainer) {
+                sliderContainer.addEventListener('mouseenter', pauseScroll);
+                sliderContainer.addEventListener('mouseleave', resumeScroll);
+            }
+
+            // Pause on touch for mobile
+            slider.addEventListener('touchstart', pauseScroll, { passive: true });
+            slider.addEventListener('touchend', () => {
+                setTimeout(resumeScroll, 1000); // Resume after 1 second
+            }, { passive: true });
+
+            // Handle page visibility (pause when tab is not active)
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    pauseScroll();
                 } else {
-                    prevBtn.style.transform = 'translateY(-50%) scale(1)';
-                }
-                
-                if (currentIndex >= maxIndex) {
-                    nextBtn.style.transform = 'translateY(-50%) scale(0.9)';
-                } else {
-                    nextBtn.style.transform = 'translateY(-50%) scale(1)';
-                }
-            }
-
-            function nextSlide() {
-                console.log('Next clicked, current:', currentIndex, 'max:', maxIndex); // Debug info
-                if (currentIndex < maxIndex) {
-                    currentIndex++;
-                    updateSlider();
-                }
-            }
-
-            function prevSlide() {
-                console.log('Prev clicked, current:', currentIndex); // Debug info
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateSlider();
-                }
-            }
-
-            // Add event listeners for slider buttons
-            if (nextBtn) {
-                nextBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    nextSlide();
-                });
-            }
-            
-            if (prevBtn) {
-                prevBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    prevSlide();
-                });
-            }
-
-            // Initialize slider
-            updateSlider();
-
-            // Enhanced keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowRight' || e.key === 'Right') {
-                    e.preventDefault();
-                    nextSlide();
-                } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
-                    e.preventDefault();
-                    prevSlide();
-                } else if (e.key === 'Home') {
-                    e.preventDefault();
-                    currentIndex = 0;
-                    updateSlider();
-                } else if (e.key === 'End') {
-                    e.preventDefault();
-                    currentIndex = maxIndex;
-                    updateSlider();
+                    resumeScroll();
                 }
             });
 
-            // Enhanced touch/swipe support for mobile
-            let startX = 0;
-            let isDragging = false;
-
-            slider.addEventListener('touchstart', function(e) {
-                startX = e.touches[0].clientX;
-                isDragging = true;
-                slider.style.transition = 'none';
-            }, { passive: true });
-
-            slider.addEventListener('touchmove', function(e) {
-                if (!isDragging) return;
-                
-                const currentX = e.touches[0].clientX;
-                const diffX = startX - currentX;
-                const currentTranslate = -currentIndex * slideWidth;
-                
-                // Add resistance at boundaries
-                let newTranslate = currentTranslate - diffX;
-                if (currentIndex === 0 && diffX < 0) {
-                    newTranslate = currentTranslate - (diffX * 0.3);
-                } else if (currentIndex >= maxIndex && diffX > 0) {
-                    newTranslate = currentTranslate - (diffX * 0.3);
-                }
-                
-                slider.style.transform = `translateX(${newTranslate}px)`;
-            }, { passive: true });
-
-            slider.addEventListener('touchend', function(e) {
-                if (!isDragging) return;
-                
-                const endX = e.changedTouches[0].clientX;
-                const diffX = startX - endX;
-                
-                // Restore transition
-                slider.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                
-                // Determine if it's a swipe based on distance
-                if (Math.abs(diffX) > 50) {
-                    if (diffX > 0) {
-                        nextSlide();
-                    } else {
-                        prevSlide();
-                    }
-                } else {
-                    // Snap back to current position
-                    updateSlider();
-                }
-                
-                isDragging = false;
-            }, { passive: true });
+            // Initialize when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeSlider);
+            } else {
+                // Add a small delay to ensure all elements are rendered
+                setTimeout(initializeSlider, 100);
+            }
 
             // Recruitment Form Handling
             const recruitmentForm = document.getElementById('recruitment-form');
@@ -689,6 +769,13 @@
             // Form submission
             recruitmentForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
+                e.stopPropagation();
+
+                // Double-check: Prevent any default form submission
+                if (e.defaultPrevented === false) {
+                    e.preventDefault();
+                    return false;
+                }
 
                 // Security: Rate limiting check
                 const userIP = await generateIPHash();
